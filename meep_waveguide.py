@@ -136,4 +136,4 @@ for f in range(len(dft_freqs)):
     plt.imshow(np.real(Ez_f),extent = [-Size_y/2, Size_y/2, -Size_x/2, Size_x/2])
     plt.colorbar()
     plt.savefig(f"Ez_f_{1./dft_freqs[f]}.png")
-    plt.close()git push 
+    plt.close()
