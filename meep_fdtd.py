@@ -138,7 +138,7 @@ def collect_fields(sim):
     snapshot_times.append(sim.meep_time())
     
 # Run simulation with field collection
-runtime = 100  # Time units (adjust based on propagation)
+runtime = 100  
 snapshot_interval = 2
 
 print("\nRunning FDTD simulation...")
