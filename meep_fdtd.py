@@ -5,7 +5,7 @@ from matplotlib import animation
 from IPython.display import HTML
 
 # Physical parameters
-n_si = 3.476      # Silicon at 1550 nm
+n_si = 3.476     # Silicon at 1550 nm
 n_sio2 = 1.444    # Silicon dioxide
 n_air = 1.0       # Air
 
@@ -21,14 +21,14 @@ g0 = 0.2          # Gap: 200 nm
 L = 10.0          # Coupling length: 10 microns
 
 # Wavelength
-wl0 = 1.55        # 1550 nm
-fcen = 1/wl0      # Center frequency
-df = 0.1*fcen     # Frequency width
+wl0 = 1.55       
+fcen = 1/wl0     
+df = 0.1*fcen    
 
 # Computational cell
-sx = L + 4        # Extra space for source and PML
-sy = 3.0          # Vertical extent
-sz = 4.0          # Horizontal extent (for two waveguides)
+sx = L + 4        
+sy = 3.0          
+sz = 4.0          
 pml_thickness = 1.0
 
 cell_size = mp.Vector3(sx, sy, sz)
@@ -70,7 +70,7 @@ sources = [
         src=mp.GaussianSource(fcen, fwidth=df),
         center=mp.Vector3(source_x, 0, -z_offset),
         size=mp.Vector3(0, sy, sz),
-        eig_band=1,  # Fundamental mode
+        eig_band=1,  
         eig_parity=mp.NO_PARITY,
         eig_match_freq=True
     )
@@ -142,21 +142,19 @@ runtime = 100  # Time units (adjust based on propagation)
 snapshot_interval = 2
 
 print("\nRunning FDTD simulation...")
-print("-"*70)
+
 
 # Run with field snapshots
 sim.run(mp.at_every(snapshot_interval, collect_fields), until=runtime)
 
-print(f"Simulation complete! Collected {len(field_snapshots)} snapshots")
-print("-"*70)
-
+print(f"Simulation complete, Collected {len(field_snapshots)} snapshots")
 # Get flux values
 flux1 = mp.get_fluxes(flux_wg1)[0]
 flux2 = mp.get_fluxes(flux_wg2)[0]
 total_flux = flux1 + flux2
 
 print("\nOutput Power Analysis:")
-print("="*70)
+
 print(f"Waveguide 1 (input) output flux:  {flux1:.6e}")
 print(f"Waveguide 2 (coupled) output flux: {flux2:.6e}")
 print(f"Total output flux: {total_flux:.6e}")
@@ -164,7 +162,7 @@ print(f"\nPower splitting:")
 print(f"  Waveguide 1: {flux1/total_flux*100:.1f}%")
 print(f"  Waveguide 2: {flux2/total_flux*100:.1f}%")
 print(f"\nCoupling efficiency: {flux2/total_flux*100:.1f}%")
-print("="*70)
+
 
 # Visualize final field distribution
 print("\nGenerating visualizations...")
@@ -247,7 +245,6 @@ plt.title('Output Power Distribution', fontsize=12, fontweight='bold')
 plt.ylim([0, 100])
 plt.grid(True, axis='y', alpha=0.3)
 
-# Add value labels on bars
 for bar in bars:
     height = bar.get_height()
     ax6.text(bar.get_x() + bar.get_width()/2., height,
@@ -258,7 +255,7 @@ plt.savefig('fdtd_coupler_analysis.png', dpi=150, bbox_inches='tight')
 print("Plot saved as 'fdtd_coupler_analysis.png'")
 plt.show()
 
-# Create animation of field propagation
+# Field prop animation 
 print("\nCreating field propagation animation...")
 fig_anim, ax_anim = plt.subplots(figsize=(12, 6))
 
@@ -269,7 +266,7 @@ def animate(i):
     ax_anim.axhline(y=-L/2, color='cyan', linestyle='--', linewidth=2, alpha=0.7)
     ax_anim.axhline(y=L/2, color='cyan', linestyle='--', linewidth=2, alpha=0.7)
     
-    # Mark waveguide positions
+    # Waveguid Pos
     ax_anim.axhline(y=0, color='white', linestyle=':', linewidth=1, alpha=0.5)
     ax_anim.text(sz/2*0.9, -z_offset, 'WG1', color='white', fontsize=10, 
                 ha='right', va='center', fontweight='bold',
@@ -288,7 +285,7 @@ def animate(i):
 anim = animation.FuncAnimation(fig_anim, animate, frames=len(field_snapshots), 
                               interval=100, blit=False, repeat=True)
 
-# Save animation
+
 anim.save('field_propagation.gif', writer='pillow', fps=10, dpi=100)
 print("Animation saved as 'field_propagation.gif'")
 plt.close(fig_anim)
