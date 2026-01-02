@@ -164,8 +164,7 @@ print(f"  Waveguide 2: {flux2/total_flux*100:.1f}%")
 print(f"\nCoupling efficiency: {flux2/total_flux*100:.1f}%")
 
 
-# Visualize final field distribution
-print("\nGenerating visualizations...")
+
 
 fig = plt.figure(figsize=(16, 10))
 
